@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static utils.StepsForProduct.randomProduct;
 
-public class UpdateProductTests extends BaseTest {
+public class ProductUpdateTests extends BaseTest {
 
     private static final String PRODUCTS_ENDPOINT = "/products";
     @BeforeAll

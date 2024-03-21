@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class GetProductsTests extends BaseTest {
+public class ProductGetTests extends BaseTest {
 
     private static final String PRODUCTS_ENDPOINT = "/products";
     @BeforeAll
@@ -18,11 +18,18 @@ public class GetProductsTests extends BaseTest {
     }
 
     @Test
-    public void getListProductsTest() {
-        List<Product> list = request.get()
+    public void getInformationAboutProduct() {
+        List<Product> list = request.get("/1")
                 .then().log().all()
                 .statusCode(200)
                 .and()
                 .extract().as(new ObjectMapper().getTypeFactory().constructCollectionType(List.class, Product.class));
+    }
+
+    @Test
+    public void getInformationAboutProductIsNoExists() {
+        request.get("/100000000")
+                .then().log().all()
+                .statusCode(404);
     }
 }

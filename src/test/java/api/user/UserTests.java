@@ -2,6 +2,7 @@ package api.user;
 
 import api.BaseTest;
 import io.restassured.RestAssured;
+import model.user.Token;
 import model.user.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

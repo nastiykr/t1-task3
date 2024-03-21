@@ -5,7 +5,7 @@ import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class RemoveProductTests extends BaseTest {
+public class ProductRemoveTests extends BaseTest {
 
     private static final String PRODUCTS_ENDPOINT = "/products";
     @BeforeAll

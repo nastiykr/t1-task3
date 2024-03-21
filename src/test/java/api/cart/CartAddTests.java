@@ -3,6 +3,7 @@ package api.cart;
 import api.BaseTest;
 import io.restassured.RestAssured;
 import io.restassured.http.Header;
+import model.cart.AddToShoppingCart;
 import model.user.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ import static utils.StepsForUser.authorizeUser;
 import static utils.StepsForUser.registerNewUser;
 
 
-public class RemoveCartTests extends BaseTest {
+public class CartAddTests extends BaseTest {
 
     private final static String USERNAME = "nastiya";
     private final static String PASSWORD = "12345";
@@ -24,52 +25,70 @@ public class RemoveCartTests extends BaseTest {
     }
 
     @Test
-    public void removeProductFromUserShoppingCart() {
+    public void addProductToUserShoppingCart() {
 
         String token = authorizeUser(new User(USERNAME, PASSWORD));
 
+        AddToShoppingCart product = new AddToShoppingCart(1,2);
+
         request.header(new Header("Authorization", "Bearer " + token))
-                .delete(CART_ENDPOINT + "/1")
+                .body(product)
+                .post(CART_ENDPOINT)
                 .then().log().all()
-                .statusCode(200);
+                .statusCode(201);
     }
 
     @Test
-    public void removeProductFromUserShoppingCartWithoutHeader() {
+    public void addProductToUserShoppingCartWithoutHeader() {
 
-        request.delete(CART_ENDPOINT + "/1")
+        AddToShoppingCart product = new AddToShoppingCart(1,2);
+
+        request.body(product)
+                .post(CART_ENDPOINT)
                 .then().log().all()
                 .statusCode(401);
     }
 
     @Test
-    public void removeProductFromUserShoppingCartWithoutToken() {
-
-        request.header(new Header("Authorization", "Bearer "))
-                .delete(CART_ENDPOINT + "/1")
-                .then().log().all()
-                .statusCode(422);
-    }
-
-    @Test
-    public void removeProductFromUserShoppingCartIsNoExists() {
+    public void addProductToUserShoppingCartWithoutBody() {
 
         String token = authorizeUser(new User(USERNAME, PASSWORD));
 
         request.header(new Header("Authorization", "Bearer " + token))
-                .delete(CART_ENDPOINT + "/2000")
+                .post(CART_ENDPOINT)
+                .then().log().all()
+                .statusCode(400);
+    }
+
+    @Test
+    public void addProductToUserShoppingCartWithoutAttributeProductId() {
+
+        String token = authorizeUser(new User(USERNAME, PASSWORD));
+
+        String product = "{" +
+                "\"product_id\": 1," +
+                "}";
+
+        request.header(new Header("Authorization", "Bearer " + token))
+                .body(product)
+                .post(CART_ENDPOINT)
+                .then().log().all()
+                .statusCode(400);
+    }
+
+    @Test
+    public void addProductToUserShoppingCartWithoutAttributeQuantity() {
+
+        String token = authorizeUser(new User(USERNAME, PASSWORD));
+
+        String product = "{" +
+                "\"quantity\": 2" +
+                "}";
+
+        request.header(new Header("Authorization", "Bearer " + token))
+                .body(product)
+                .post(CART_ENDPOINT)
                 .then().log().all()
                 .statusCode(404);
-    }
-
-    @Test
-    public void removeProductFromUserShoppingCartWithoutId() {
-
-        String token = authorizeUser(new User(USERNAME, PASSWORD));
-
-        request.header(new Header("Authorization", "Bearer " + token))
-                .delete(CART_ENDPOINT)
-                .then().log().all()
-                .statusCode(405);
     }
 }

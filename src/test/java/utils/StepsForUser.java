@@ -1,6 +1,6 @@
 package utils;
 
-import api.user.Token;
+import model.user.Token;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import model.user.User;

@@ -14,7 +14,7 @@ import static utils.StepsForUser.authorizeUser;
 import static utils.StepsForUser.registerNewUser;
 
 
-public class GetCartTests extends BaseTest {
+public class CartGetTests extends BaseTest {
 
     private final static String USERNAME = "nastiya";
     private final static String PASSWORD = "12345";

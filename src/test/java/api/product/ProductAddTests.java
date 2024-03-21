@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static utils.StepsForProduct.createNewProduct;
 
-public class AddProductTests extends BaseTest {
+public class ProductAddTests extends BaseTest {
 
     private static final String PRODUCTS_ENDPOINT = "/products";
 
